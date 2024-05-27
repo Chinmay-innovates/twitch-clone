@@ -37,5 +37,5 @@ export async function POST(req: Request) {
       },
     });
   }
-  console.log("Ingress body:", body);
+  // console.log("Ingress body:", body);
 }

@@ -1,13 +1,17 @@
 'use client'
+
 import { Stream, User } from "@prisma/client"
+
 import { LiveKitRoom } from "@livekit/components-react"
 import { useViewerToken } from "@/hooks/use-viewer-token";
 
-import { Chat } from "./chat";
-import { Video } from "./video";
+import { Video, VideoSkeleton } from "./video";
+import { Header, HeaderSkeleton } from "./header";
+import { Chat, ChatSkeleton } from "./chat";
 
 import { cn } from "@/lib/utils";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
+import { ChatToggle } from "./chat-toggle";
 
 interface StreamPlayerProps {
     user: User & { stream: Stream | null };
@@ -24,24 +28,35 @@ export const StreamPlayer = ({
     const { collapsed } = useChatSidebar((state) => state)
 
     if (!identity || !name || !token) {
-        return (
-            <div>Cannot watch the stream</div>
-        )
+        return <StreamPlayerSkeleton />
     }
     return (
         <>
+            {collapsed && (
+                <div className="hidden fixed lg:block top-[100px] right-2 z-50">
+                    <ChatToggle />
+                </div>
+            )}
             <LiveKitRoom
                 token={token}
                 serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
                 className={cn(
                     "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4",
-                    collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3"
+                    collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
                 )}
             >
-                <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg: overflow-y-auto hidden-scrollbar pb-10">
+                <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
                     <Video
                         hostname={user.userName}
                         hostIdentity={user.id}
+                    />
+                    <Header
+                        hostName={user.userName}
+                        hostIdentity={user.id}
+                        viewerIdentitiy={identity}
+                        imageUrl={user.imageUrl}
+                        isFollowing={isFollowing}
+                        name={stream.name}
                     />
                 </div>
                 <div className={cn(
@@ -63,3 +78,16 @@ export const StreamPlayer = ({
     )
 }
 
+export const StreamPlayerSkeleton = () => {
+    return (
+        <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
+            <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
+                <VideoSkeleton />
+                <HeaderSkeleton />
+            </div>
+            <div className="col-span-1 bg-background">
+                <ChatSkeleton />
+            </div>
+        </div>
+    )
+}
