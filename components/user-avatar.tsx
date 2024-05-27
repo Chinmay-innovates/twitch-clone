@@ -12,7 +12,7 @@ const avatarSizes = cva(
         variants: {
             size: {
                 default: "size-8",
-                lg: "size-16"
+                lg: "size-14"
             },
         },
         defaultVariants: {
@@ -52,7 +52,7 @@ export const UserAvatar = ({
                     {userName[userName.length - 1]}
                 </AvatarFallback>
                 {canShowBadge && (
-                    <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2  translate-y-1/4  z-10">
+                    <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
                         <LiveBadge />
                     </div>
                 )}

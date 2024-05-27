@@ -31,7 +31,7 @@ export const Hint = ({
                     align={align}
                 >
                     <p
-                        className="font-semibold"
+                    className="font-semibold"
                     >{label}</p>
                 </TooltipContent>
             </Tooltip>

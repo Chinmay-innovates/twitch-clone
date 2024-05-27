@@ -1,16 +1,11 @@
+import { Button } from "@/components/ui/button"
 import { SignInButton, UserButton } from "@clerk/nextjs"
 import { currentUser } from "@clerk/nextjs/server"
-
+import { Clapperboard, Loader } from "lucide-react"
 import Link from "next/link"
-import { redirect } from "next/navigation"
-
-import { Clapperboard } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 
 export const Actions = async () => {
-    const user = await currentUser();
-    if (!user) return redirect('/');
+    const user = await currentUser()
     return (
         <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
             {!user && (
@@ -38,6 +33,9 @@ export const Actions = async () => {
                             >Dashboard</span>
                         </Link>
                     </Button>
+                    {/* <ClerkLoading>
+                        <Loader className="size-5 animate-spin  text-muted-foreground" />
+                    </ClerkLoading> */}
                     <UserButton afterSignOutUrl="/" />
                 </div>
             )}
