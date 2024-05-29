@@ -1,12 +1,13 @@
 import { Check } from "lucide-react"
+import Image from "next/image"
 
 
-export const VerfiedMark = ()=>{
-    return(
+export const VerfiedMark = () => {
+    return (
         <div className="p-0.5 flex items-center justify-center size-4 
         rounded-full bg-blue-600
         ">
-            <Check className="size-[10px] text-primary stroke-[4px]"/>
+            <Check className="size-[10px] text-primary stroke-[4px] " />
         </div>
     )
 }

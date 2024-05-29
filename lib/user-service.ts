@@ -3,7 +3,14 @@ import { db } from "@/lib/db";
 export const getUserByUserName = async (userName: string) => {
   const user = await db.user.findUnique({
     where: { userName },
-    include: { stream: true },
+    include: {
+      stream: true,
+      _count: {
+        select: {
+          followedBy: true,
+        },
+      },
+    },
   });
   return user;
 };

@@ -8,9 +8,10 @@ import { Clapperboard } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
+
 export const Actions = async () => {
     const user = await currentUser();
-    if (!user) return redirect('/');
+    if (!user) return redirect('/')
     return (
         <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
             {!user && (
