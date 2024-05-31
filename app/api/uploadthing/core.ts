@@ -4,11 +4,7 @@ import { useAuth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
-const handleAuth = () => {
-  const { userId } = useAuth();
-  if (!userId) throw new Error("Unauthorized");
-  return { userId: userId };
-};
+
 export const ourFileRouter = {
   thumbnailUploader: f({
     image: {
