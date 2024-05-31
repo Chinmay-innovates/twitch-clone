@@ -11,8 +11,8 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
-  // previewFeatures = ["fullTextIndex", "fullTextSearch"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
 }
 
 model User {

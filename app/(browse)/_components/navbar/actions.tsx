@@ -2,16 +2,15 @@ import { SignInButton, UserButton } from "@clerk/nextjs"
 import { currentUser } from "@clerk/nextjs/server"
 
 import Link from "next/link"
-import { redirect } from "next/navigation"
 
 import { Clapperboard } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { redirect } from "next/navigation"
 
 
 export const Actions = async () => {
     const user = await currentUser();
-    if (!user) return redirect('/')
     return (
         <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
             {!user && (

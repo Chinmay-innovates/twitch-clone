@@ -1,31 +1,30 @@
-'use server'
+"use server";
 
 import { getSelf } from "./auth-service";
 import { db } from "@/lib/db";
 
 export const isBlockedByUser = async (id: string) => {
+  const self = await getSelf();
 
-    const self = await getSelf();
+  const otherUser = await db.user.findUnique({
+    where: { id },
+  });
 
-    const otherUser = await db.user.findUnique({
-      where: { id },
-    });
+  if (!otherUser) throw new Error("User not Found");
 
-    if (!otherUser) throw new Error("User not Found");
-
-    if (otherUser.id === self.id) {
-      return false;
-    }
-    const existingBlock = await db.block.findUnique({
-      where: {
-        blockerId_blockedId: {
-          blockerId: otherUser.id,
-          blockedId: self.id,
-        },
+  if (otherUser.id === self.id) {
+    return false;
+  }
+  const existingBlock = await db.block.findUnique({
+    where: {
+      blockerId_blockedId: {
+        blockerId: otherUser.id,
+        blockedId: self.id,
       },
-    });
+    },
+  });
 
-    return !!existingBlock;
+  return !!existingBlock;
 };
 
 export const blockUser = async (id: string) => {
@@ -77,9 +76,8 @@ export const unBlockUser = async (id: string) => {
   const otherUser = await db.user.findUnique({
     where: { id },
   });
-  if (!otherUser) {
-    throw new Error("User not Found");
-  }
+  if (!otherUser) throw new Error("User not Found");
+
   const existingBlock = await db.block.findUnique({
     where: {
       blockerId_blockedId: {
@@ -103,4 +101,19 @@ export const unBlockUser = async (id: string) => {
   });
 
   return unblock;
+};
+
+export const getBlockedUsers = async () => {
+  const self = await getSelf();
+
+  const blockedUsers = await db.block.findMany({
+    where: {
+      blockerId: self.id,
+    },
+    include: {
+      blocked: true,
+    },
+  });
+
+  return blockedUsers;
 };
