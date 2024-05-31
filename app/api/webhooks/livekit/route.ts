@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { WebhookReceiver } from "livekit-server-sdk";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 
 const receiver = new WebhookReceiver(
   process.env.LIVEKIT_API_KEY!,
@@ -39,6 +38,6 @@ export async function POST(req: Request) {
     });
   }
 
-  // console.log("Ingress body:", body);
+  console.log("Ingress body:", body);
   return new Response("", { status: 200 });
 }

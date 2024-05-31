@@ -12,7 +12,7 @@ interface ActionsProps {
 }
 const Actions = ({
     isFollowing,
-    userId
+    userId,
 }: ActionsProps) => {
     const [isPending, startTransition] = useTransition();
 
@@ -36,12 +36,13 @@ const Actions = ({
 
     const handleBlock = () => {
         startTransition(() => {
-            onUnblock(userId)
-                .then((data) => toast.success(`UnBlocked the user ${data.blocked.userName}`)
+            onBlock(userId)
+                .then((data) => toast.success(`Blocked the user ${data?.blocked.userName}`)
                 )
                 .catch(() => toast.error("Something went wrong"))
         });
     };
+
     return (
         <>
             <Button
@@ -56,7 +57,7 @@ const Actions = ({
                 disabled={isPending}
                 onClick={handleBlock}
             >
-                un block
+              Unblock 
             </Button>
         </>
     )
