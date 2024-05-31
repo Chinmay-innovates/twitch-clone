@@ -1,6 +1,5 @@
 import { getSelf } from "@/lib/auth-service";
 import { db } from "@/lib/db";
-import { useAuth } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
