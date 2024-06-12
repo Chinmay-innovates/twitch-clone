@@ -7,10 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:gen": "npx prisma generate",
-    "db:push": "npx prisma db push",
-    "db:studio": "npx prisma studio",
-    "db:migrate": "npx prisma migrate reset",
     "postinstall": "prisma generate"
   },
   "dependencies": {

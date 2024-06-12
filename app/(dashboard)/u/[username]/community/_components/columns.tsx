@@ -56,6 +56,6 @@ export const columns: ColumnDef<BlockedUser>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <UnblockButton userId={row.original.id} />
+    cell: ({ row }) => <UnblockButton userId={row.original.userId} />
   },
 ];
